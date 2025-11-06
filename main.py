@@ -1,16 +1,34 @@
+"""Programme principal pour tester la fonction ispalindrome."""
+import unicodedata
 #### Fonction secondaire
 
+def normaliser(s: str) -> str:
+    """ Supprime les accents et caractères spéciaux d'une chaîne Unicode,
+    remplace les ligatures, et ne garde que lettres et chiffres.
+    """
+    s = (
+        s.replace("œ", "oe")
+         .replace("Œ", "oe")
+         .replace("æ", "ae")
+         .replace("Æ", "ae")
+         .replace("ß", "ss")
+    )
+    s = unicodedata.normalize('NFD', s)
+    s = "".join(c for c in s if unicodedata.category(c) != "Mn")
+    s = s.lower()
+    s = "".join(c for c in s if c.isalnum())
 
-def ispalindrome(p):
+    return s
 
-    # votre code ici
-    
-    return False
+def ispalindrome(p: str) -> bool:
+    """Renvoie True si la chaîne p est un palindrome, False sinon."""
+    p = normaliser(p)
+    return p == p[::-1]
 
-#### Fonction principale
 
 
-def main():
+def main() -> None:
+    """appel main pour tester la fonction ispalindrome."""
 
     # vos appels à la fonction secondaire ici
 
